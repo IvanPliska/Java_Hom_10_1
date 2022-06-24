@@ -32,6 +32,20 @@ public class RadioTest {
 
     }
 
+    @Test // выбор радиостанции если она больше 10-ти
+
+    public void showIfMoreMaxNumberRadioStation() {
+        Radio radio = new Radio();
+
+        radio.setNumberRadioStations(11);
+
+        int expected = 0;
+        int actual = radio.getNumberRadioStations();
+
+        assertEquals(expected, actual);
+
+    }
+
     @Test // тест на выбор следующей радиостанции
 
     public void showNextNumberRadioStation() {
@@ -64,11 +78,39 @@ public class RadioTest {
 
     public void showNextNumberRadioStationIfMoreMax() {
         Radio radio = new Radio();
-        radio.setNumberRadioStations(11);
+        radio.setNumberRadioStations(10);
 
         radio.nextNumberRadioStation();
 
         int expected = 0;
+        int actual = radio.getNumberRadioStations();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test // Тест на выбор радиостанции если она меньше 0
+
+    public void showNextNumberRadioStationIfZero() {
+        Radio radio = new Radio();
+        radio.setNumberRadioStations(0);
+
+        radio.nextNumberRadioStation();
+
+        int expected = 1;
+        int actual = radio.getNumberRadioStations();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test // Тест на выбор радиостанции если она отрицательная
+
+    public void showNextNumberRadioStationIfMoreMin() {
+        Radio radio = new Radio();
+        radio.setNumberRadioStations(-1);
+
+        radio.nextNumberRadioStation();
+
+        int expected = 9;
         int actual = radio.getNumberRadioStations();
 
         assertEquals(expected, actual);
@@ -88,12 +130,11 @@ public class RadioTest {
         assertEquals(expected, actual);
     }
 
-    @Test // тест на выбор радиостанции перед 0-ой
-
+    @Test // тест на выбор радиостанции меньше нуля
 
     public void showPrevNumberRadioStationIfMin() {
         Radio radio = new Radio();
-        radio.setNumberRadioStations(0);
+        radio.setNumberRadioStations(-1);
 
         radio.prevNumberRadioStation();
 
@@ -103,9 +144,9 @@ public class RadioTest {
         assertEquals(expected, actual);
     }
 
-    @Test // тест на выбор отрицательной радиостанции
+    @Test // тест на выбор радиостанции меньше -1
 
-    public void showPrevNumberRadioStationIfMoreMin() {
+    public void showPrevNumberRadioStationIfMinimum() {
         Radio radio = new Radio();
         radio.setNumberRadioStations(-2);
 
@@ -117,7 +158,35 @@ public class RadioTest {
         assertEquals(expected, actual);
     }
 
-    // Тесты для громкости
+    @Test // тест на выбор радиостанции перед 0-ой
+
+    public void showPrevNumberRadioStationIfZero() {
+        Radio radio = new Radio();
+        radio.setNumberRadioStations(0);
+
+        radio.prevNumberRadioStation();
+
+        int expected = 9;
+        int actual = radio.getNumberRadioStations();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test // тест на выбор радиостанции равной 10 ти
+
+    public void showPrevNumberRadioStationIfMoreMin() {
+        Radio radio = new Radio();
+        radio.setNumberRadioStations(10);
+
+        radio.prevNumberRadioStation();
+
+        int expected = 0;
+        int actual = radio.getNumberRadioStations();
+
+        assertEquals(expected, actual);
+    }
+
+    // Тесты для громкости:
 
     @Test // выбор громкости в пределах допустимой
 
@@ -169,20 +238,6 @@ public class RadioTest {
         assertEquals(expected, actual);
     }
 
-    @Test // тест уменьшения громкости в возможных пределах
-
-    public void showPrevVolume() {
-        Radio radio = new Radio();
-        radio.setVolume(5);
-
-        radio.prevVolume();
-
-        int expected = 4;
-        int actual = radio.getVolume();
-
-        assertEquals(expected, actual);
-    }
-
     @Test // тест увелечения громкости если уже было 10
 
     public void showNextVolumeIfMax() {
@@ -192,6 +247,48 @@ public class RadioTest {
         radio.nextVolume();
 
         int expected = 10;
+        int actual = radio.getVolume();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test // тест увеличения громкости если для значения более 10 ти
+
+    public void showNextVolumeIfMoreMax() {
+        Radio radio = new Radio();
+        radio.setVolume(11);
+
+        radio.nextVolume();
+
+        int expected = 10;
+        int actual = radio.getVolume();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test // тест увеличения громкости если для значения более 10 ти
+
+    public void showNextVolumeIfZero() {
+        Radio radio = new Radio();
+        radio.setVolume(0);
+
+        radio.nextVolume();
+
+        int expected = 0;
+        int actual = radio.getVolume();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test // тест уменьшения громкости в возможных пределах
+
+    public void showPrevVolume() {
+        Radio radio = new Radio();
+        radio.setVolume(5);
+
+        radio.prevVolume();
+
+        int expected = 4;
         int actual = radio.getVolume();
 
         assertEquals(expected, actual);
@@ -211,15 +308,15 @@ public class RadioTest {
         assertEquals(expected, actual);
     }
 
-    @Test // тест увелечения громкости превышающий границу максимальной громкости
+    @Test // тест уменьшения громкости на границе максимальной громкости
 
-    public void showNextVolumeIfMaxMore() {
+    public void showPrevVolumeIfMaxMore() {
         Radio radio = new Radio();
-        radio.setVolume(12);
+        radio.setVolume(11);
 
-        radio.nextVolume();
+        radio.prevVolume();
 
-        int expected = 0;
+        int expected = 10;
         int actual = radio.getVolume();
 
         assertEquals(expected, actual);
@@ -239,4 +336,17 @@ public class RadioTest {
         assertEquals(expected, actual);
     }
 
+    @Test // тест уменьшения громкости превышающий границу максимальной громкости
+
+    public void showPrevVolumeIfMaximum() {
+        Radio radio = new Radio();
+        radio.setVolume(12);
+
+        radio.prevVolume();
+
+        int expected = 0;
+        int actual = radio.getVolume();
+
+        assertEquals(expected, actual);
+    }
 }
