@@ -1,17 +1,22 @@
 package ru.netology.javaqa38.Homework_10_1.RadioServise;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Radio {
     // Параметры:
 
     private int numberRadioStations;
     private int volume;
-    private int maxNumberRadioStation;
+    private int maxNumberRadioStation = 9;
+    private int maxVolume = 100;
 
     // Конструкторы:
-
-    public Radio() {
-        maxNumberRadioStation = 9;
-    }
 
     public Radio(int countRadioStation) {
         maxNumberRadioStation = countRadioStation - 1;
@@ -36,10 +41,10 @@ public class Radio {
     }
 
     public void nextVolume() {
-        if (volume < 100) {
+        if (volume < maxVolume) {
             volume++;
         } else {
-            volume = 100;
+            volume = maxVolume;
         }
         ;
     }
@@ -51,6 +56,7 @@ public class Radio {
             volume = 0;
         }
     }
+
 
     // Сеттеры:
 
@@ -68,19 +74,9 @@ public class Radio {
         if (volume < 0) {
             return;
         }
-        if (volume > 100) {
-            volume = 100;
+        if (volume > maxVolume) {
+            volume = maxVolume;
         }
         this.volume = volume;
-    }
-
-    // Геттеры:
-
-    public int getNumberRadioStations() {
-        return numberRadioStations;
-    }
-
-    public int getVolume() {
-        return volume;
     }
 }
